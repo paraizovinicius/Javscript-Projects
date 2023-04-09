@@ -12,7 +12,7 @@ Once you have installed Node.js and npm, you can follow these steps to run the c
 
 1. Clone this repository to your local machine using the following command:
 
-git clone [insert URL of your GitHub repository here]
+git clone https://github.com/paraizovinicius/Javscript-Projects
 
 2. Navigate to the root directory of the project in your terminal.
 
