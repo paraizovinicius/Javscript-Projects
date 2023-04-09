@@ -12,17 +12,17 @@ Once you have installed Node.js and npm, you can follow these steps to run the c
 
 1. Clone this repository to your local machine using the following command:
 
-git clone https://github.com/paraizovinicius/Javscript-Projects
+```git clone https://github.com/paraizovinicius/Javscript-Projects```
 
 2. Navigate to the root directory of the project in your terminal.
 
 3. Install the necessary dependencies by running the following command:
 
-npm install
+```npm install```
 
 4. Once the dependencies have been installed, you can start the development server by running the following command:
 
-npm start
+```npm start```
 
 5. The application should now be running on http://localhost:3000.
 
