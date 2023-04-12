@@ -12,6 +12,7 @@
     margin: 0 auto;
     position: relative;
     overflow: hidden;
+    background-color: skyblue;
 }
 
 .clouds{
@@ -39,7 +40,7 @@
 .mario{
     position: absolute;
     width: 150px;
-    bottom: 0;
+    bottom: 0px;
 }
 
 .jump{
