@@ -20,8 +20,11 @@ const loop = setInterval(() => {
 
     if (pipePosition < 120 && pipePosition > 0 && marioPosition < '100px'){
         pipe.style.animation = 'none';
+        mario.style.animation = 'none';
         pipe.style.left = `${pipePosition}px`
         mario.src = 'game-over.png';
+        mario.style.width = '100px';
+        
         
         
     }

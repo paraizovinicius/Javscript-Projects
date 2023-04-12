@@ -14,6 +14,21 @@
     overflow: hidden;
 }
 
+.clouds{
+  position: absolute;
+  width: 400px;
+  animation: cloud-animation 13s infinite linear;
+}
+
+@keyframes cloud-animation{
+  from{
+    right: -400px;
+}
+  to{
+      right: 100%;
+  }
+}
+
 .pipe{ 
     position: absolute;
     bottom: 0;
