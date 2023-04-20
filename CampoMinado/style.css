@@ -1,11 +1,14 @@
-
 .GameBoard {
     border-collapse: collapse;
     width: 400px;
     margin: 0 auto;
     position: absolute;
-    top: 25%; left: 0; bottom: 0; right: 0;
+    top: 25%;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
+
 td {
     width: 40px;
     height: 40px;
@@ -14,16 +17,17 @@ td {
     font-weight: bold;
     font-size: 20px;
     background-color: gray;
-  }
+}
 
 img {
     max-width: 70%;
 }
 
-  
-td.clicked {
-    background-color: white;
-}
-td.bomb {
-    background-color: red;
+.gameover {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    text-shadow: 2px 2px #fff;
+    margin: 20px 0;
 }
