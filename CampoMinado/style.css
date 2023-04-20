@@ -16,11 +16,14 @@ td {
     border: 1px solid black;
     font-weight: bold;
     font-size: 20px;
-    background-color: gray;
+    background-color: #BDBDBD;
 }
 
 img {
-    max-width: 70%;
+
+    max-width: 75%;
+    display: block;
+    margin: auto;
 }
 
 .gameover {

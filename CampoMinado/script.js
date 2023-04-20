@@ -22,7 +22,7 @@ function getRandomValues(array, quantity) { // Seleciona valores aleatórios den
 }
 
 
-function setBombedCells() {
+function ClickCells() {
     var table = document.querySelector(".GameBoard");
     var cells = table.querySelectorAll("td");
     var c = 0;
@@ -45,14 +45,13 @@ function setBombedCells() {
             }
         };
     });
-}
-
-function clickCells(){
-    var table = document.querySelector(".GameBoard");
-    var cells = table.querySelectorAll("td");
 
     
+
+
 }
+
+
 
 
 function showGameOver() {
@@ -64,7 +63,6 @@ function showGameOver() {
 
 
 
-setBombedCells();
-clickCells();
+ClickCells();
 
 
