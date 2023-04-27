@@ -106,6 +106,8 @@ function ClickCells() {
                 else { // CASO NÃO FOR GAME OVER ...
 
                     if (SumBombas(index, randomCellsIndexes) == 1) {
+                        
+                        
                         var um = document.createElement("img");
                         um.src = "1.png";
                         this.innerHTML = "";
