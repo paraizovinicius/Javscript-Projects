@@ -61,6 +61,8 @@ function getRandomValues(array, quantity) { // Seleciona valores aleatórios den
 }
 
 
+
+
 function ClickCells() {
     var table = document.querySelector(".GameBoard");
     var cells = table.querySelectorAll("td");
@@ -77,18 +79,18 @@ function ClickCells() {
     // Define o evento onclick para cada uma das células selecionadas
     if (gameover == 0) {
         cellIndexes.forEach(index => {
+            
             cells[index].onclick = function () {
-
 
                 if (randomCellsIndexes.includes(index)) { // GAME OVER
 
 
-                    cells.forEach((cell, index )=> { // Fazer aparecer todas as bombas
+                    cells.forEach((cell, index) => { // Fazer aparecer todas as bombas
 
                         if (randomCellsIndexes.includes(index)) { // if cell is a bomb
                             var bomb = document.createElement("img");
                             bomb.src = "bombear.png";
-                
+
                             // Substitui o conteúdo da célula pelo elemento de imagem
                             cell.innerHTML = "";
                             cell.appendChild(bomb);
@@ -106,8 +108,8 @@ function ClickCells() {
                 else { // CASO NÃO FOR GAME OVER ...
 
                     if (SumBombas(index, randomCellsIndexes) == 1) {
-                        
-                        
+
+
                         var um = document.createElement("img");
                         um.src = "1.png";
                         this.innerHTML = "";
@@ -138,7 +140,19 @@ function ClickCells() {
                         this.appendChild(cinco);
                     }
                 }
+
+
             };
+           
+            cells[index].addEventListener("contextmenu", function (event) {
+                
+                var bandeira = document.createElement("img");
+                bandeira.src = "Bandeira.png";
+                this.innerHTML = "";
+                this.appendChild(bandeira);
+                event.preventDefault(); // Use o método preventDefault() para impedir que o menu de contexto padrão seja exibido
+            });
+
         });
     }
 }
