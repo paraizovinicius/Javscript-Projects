@@ -1,6 +1,6 @@
 .GameBoard {
     border-collapse: collapse;
-    width: 400px;
+    width: 370px;
     margin: 0 auto;
     position: absolute;
     top: 25%;
@@ -10,15 +10,15 @@
 }
 
 td {
-    width: 20px;
-    height: 40px;
+    width: 0px;
+    height: 30px;
     text-align: center;
+    background-color: #BDBDBD;
     border: 1px solid grey;
     font-weight: bold;
     font-size: 20px;
-    background-image: url('quadrado.png');
-    background-size: cover;
 }
+
 
 img {
 
