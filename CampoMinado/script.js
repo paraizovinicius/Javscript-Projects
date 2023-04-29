@@ -13,36 +13,85 @@ function showAllBombs() {
         }
     });
 }
+/*
+function Zero(){
 
+}
 
+*/
 
 function SumBombas(index, randomCellsIndexes) {
     var _sumBombas = 0;
 
-    if (randomCellsIndexes.includes(index - 9)) {
-        _sumBombas++;
+    if (index % 8 == 0) { // Esquerda
+       
+        if (randomCellsIndexes.includes(index + 1)) {
+            _sumBombas++;
+        }
+        if (randomCellsIndexes.includes(index - 7)) {
+            _sumBombas++;
+        }
+        if (randomCellsIndexes.includes(index - 8)) {
+            _sumBombas++;
+        }
+        if (randomCellsIndexes.includes(index + 8)) {
+            _sumBombas++;
+        } 
+        if (randomCellsIndexes.includes(index + 9)) {
+            _sumBombas++;
+        }
+
     }
-    if (randomCellsIndexes.includes(index - 8)) {
-        _sumBombas++;
+    else {
+        if ((index - 7) % 8 == 0) { // Direita
+          
+            if (randomCellsIndexes.includes(index - 1)) {
+                _sumBombas++;
+            }
+            if (randomCellsIndexes.includes(index + 7)) {
+                _sumBombas++;
+            }
+            if (randomCellsIndexes.includes(index + 8)) {
+                _sumBombas++;
+            }
+            if (randomCellsIndexes.includes(index - 8)) {
+                _sumBombas++;
+            }
+            if (randomCellsIndexes.includes(index - 9)) {
+                _sumBombas++;
+            }
+
+        }
+
+        else {
+            if (randomCellsIndexes.includes(index - 9)) {
+                _sumBombas++;
+            }
+            if (randomCellsIndexes.includes(index - 8)) {
+                _sumBombas++;
+            }
+            if (randomCellsIndexes.includes(index - 7)) {
+                _sumBombas++;
+            }
+            if (randomCellsIndexes.includes(index - 1)) {
+                _sumBombas++;
+            }
+            if (randomCellsIndexes.includes(index + 1)) {
+                _sumBombas++;
+            }
+            if (randomCellsIndexes.includes(index + 7)) {
+                _sumBombas++;
+            }
+            if (randomCellsIndexes.includes(index + 8)) {
+                _sumBombas++;
+            }
+            if (randomCellsIndexes.includes(index + 9)) {
+                _sumBombas++;
+            }
+        }
     }
-    if (randomCellsIndexes.includes(index - 7)) {
-        _sumBombas++;
-    }
-    if (randomCellsIndexes.includes(index - 1)) {
-        _sumBombas++;
-    }
-    if (randomCellsIndexes.includes(index + 1)) {
-        _sumBombas++;
-    }
-    if (randomCellsIndexes.includes(index + 7)) {
-        _sumBombas++;
-    }
-    if (randomCellsIndexes.includes(index + 8)) {
-        _sumBombas++;
-    }
-    if (randomCellsIndexes.includes(index + 9)) {
-        _sumBombas++;
-    }
+
+
 
 
     return _sumBombas
@@ -79,7 +128,7 @@ function ClickCells() {
     // Define o evento onclick para cada uma das células selecionadas
     if (gameover == 0) {
         cellIndexes.forEach(index => {
-            
+
             cells[index].onclick = function () {
 
                 if (randomCellsIndexes.includes(index)) { // GAME OVER
@@ -107,9 +156,15 @@ function ClickCells() {
 
                 else { // CASO NÃO FOR GAME OVER ...
 
+                    if (SumBombas(index, randomCellsIndexes) == 0) {
+                        var zero = document.createElement("img");
+                        zero.src = "0.png";
+                        this.innerHTML = "";
+                        this.appendChild(zero);
+                        //Zero();
+                    }
+
                     if (SumBombas(index, randomCellsIndexes) == 1) {
-
-
                         var um = document.createElement("img");
                         um.src = "1.png";
                         this.innerHTML = "";
@@ -143,9 +198,9 @@ function ClickCells() {
 
 
             };
-           
-            cells[index].addEventListener("contextmenu", function (event) {
-                
+
+            cells[index].addEventListener("contextmenu", function (event) { // Bandeira
+
                 var bandeira = document.createElement("img");
                 bandeira.src = "Bandeira.png";
                 this.innerHTML = "";
@@ -156,10 +211,6 @@ function ClickCells() {
         });
     }
 }
-
-
-
-
 
 function showGameOver() {
     var h1 = document.createElement("h1");
