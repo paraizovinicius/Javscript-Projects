@@ -1,35 +1,49 @@
-const personagem = document.getElementById("personagem");
+const personagem = document.querySelector(".personagem");
 const velocidade = 10;
 const alturaDoPulo = 100;
 let posicao = 0;
 let subindo = false;
 
+
+var hero_moving = document.createElement("img");
+hero_moving.src = "mario.gif";
+
+var hero_still = document.createElement("img");
+hero_still.src = "marioparado.png";
+personagem.innerHTML = "";
+personagem.appendChild(hero_still);
+
+
 function moverParaDireita() {
+    
     posicao += velocidade;
     personagem.style.left = posicao + "px";
-    console.log(posicao)
+    personagem.innerHTML = "";
+    personagem.appendChild(hero_moving);
 }
 
 function moverParaEsquerda() {
+    
     posicao -= velocidade;
     personagem.style.left = posicao + "px";
+    personagem.innerHTML = "";
+    personagem.appendChild(hero_moving);
 }
 
-function pular() {
-    subindo = true;
-    const intervalo = setInterval(function () {
-        if (posicao <= alturaDoPulo && subindo) {
-            posicao += velocidade;
-            personagem.style.bottom = posicao + "px";
-        } else if (posicao > 0) {
-            posicao -= velocidade;
-            personagem.style.bottom = posicao + "px";
-            subindo = false;
-        } else {
-            clearInterval(intervalo);
-        }
-    }, 10);
+function parar() {
+    personagem.innerHTML = "";
+    personagem.appendChild(hero_still);
 }
+
+
+
+const pular = () => {
+    personagem.classList.add('jump');
+
+    setTimeout(() => {
+        personagem.classList.remove('jump');
+    }, 500);
+};
 
 document.addEventListener("keydown", function (event) {
     if (event.code === "ArrowRight") {
@@ -37,6 +51,12 @@ document.addEventListener("keydown", function (event) {
     } else if (event.code === "ArrowLeft") {
         moverParaEsquerda();
     } else if (event.code === "Space") {
-        pular();
+        pular(); 
+    }
+});
+
+document.addEventListener("keyup", function (event) {
+    if (event.code === "ArrowRight" || event.code === "ArrowLeft") {
+        parar();
     }
 });
