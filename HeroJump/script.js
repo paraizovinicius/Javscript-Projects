@@ -7,8 +7,15 @@ let subindo = false;
 var hero_moving = document.createElement("img");
 hero_moving.src = "mario.gif";
 
+var hero_moving180 = document.createElement("img");
+hero_moving180. src = "mario180.gif";
+
 var hero_still = document.createElement("img");
 hero_still.src = "marioparado.png";
+
+var hero_still180 = document.createElement("img");
+hero_still180 = "marioparado180.png"
+
 personagem.innerHTML = "";
 personagem.appendChild(hero_still); // o personagem vai inicializar parado
 
@@ -55,7 +62,7 @@ function moverParaDireita() {
         posicao -= velocidade;
         personagem.style.left = posicao + "px";
         personagem.innerHTML = "";
-        personagem.appendChild(hero_moving);
+        personagem.appendChild(hero_moving180);
       }, 30);
     }
   
