@@ -1,5 +1,11 @@
 ## Mario Jump
-This is a generic Mario Jump game made in HTML, CSS and Javascript. [still in progress]
+This is a generic Mario Jump game.
+
+## Minefield game
+This is a 8x8 Minefield game.
+
+## Hero Jump
+This is a 2D game, where you can control a 2D character with your rightarrow and leftarrow and jump with spacebar. [Still in progress]
 
 
 ### Installation
