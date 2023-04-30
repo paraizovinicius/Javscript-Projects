@@ -24,7 +24,7 @@ function SumBombas(index, randomCellsIndexes) {
     var _sumBombas = 0;
 
     if (index % 8 == 0) { // Esquerda
-       
+
         if (randomCellsIndexes.includes(index + 1)) {
             _sumBombas++;
         }
@@ -36,7 +36,7 @@ function SumBombas(index, randomCellsIndexes) {
         }
         if (randomCellsIndexes.includes(index + 8)) {
             _sumBombas++;
-        } 
+        }
         if (randomCellsIndexes.includes(index + 9)) {
             _sumBombas++;
         }
@@ -44,7 +44,7 @@ function SumBombas(index, randomCellsIndexes) {
     }
     else {
         if ((index - 7) % 8 == 0) { // Direita
-          
+
             if (randomCellsIndexes.includes(index - 1)) {
                 _sumBombas++;
             }
@@ -111,6 +111,8 @@ function getRandomValues(array, quantity) { // Seleciona valores aleatórios den
 
 
 
+var numCliques = 0;
+var clickedcells = [];
 
 function ClickCells() {
     var table = document.querySelector(".GameBoard");
@@ -195,17 +197,38 @@ function ClickCells() {
                         this.appendChild(cinco);
                     }
                 }
-
-
+                clickedcells.push(index);
             };
 
-            cells[index].addEventListener("contextmenu", function (event) { // Bandeira
 
+
+
+            cells[index].addEventListener("contextmenu", function (event) { // Bandeira
                 var bandeira = document.createElement("img");
                 bandeira.src = "Bandeira.png";
-                this.innerHTML = "";
-                this.appendChild(bandeira);
-                event.preventDefault(); // Use o método preventDefault() para impedir que o menu de contexto padrão seja exibido
+
+                var quadrado = document.createElement("img");
+                quadrado.src = "quadrado.png";
+
+                // Verifique se o número de cliques é ímpar ou par
+                if (numCliques % 2 === 0) {
+                    if (!clickedcells.includes(index)) {
+                        this.innerHTML = "";
+                        this.appendChild(bandeira);
+                        event.preventDefault(); // Use o método preventDefault() para impedir que o menu  
+                    }
+
+                } else { // Par
+                    if (!clickedcells.includes(index)) {
+                        this.innerHTML = "";
+                        this.appendChild(quadrado);
+                        event.preventDefault(); // Use o método preventDefault() para impedir que o menu 
+                    }
+
+                }
+
+                // Incrementa a variável de número de cliques
+                numCliques++;
             });
 
         });
