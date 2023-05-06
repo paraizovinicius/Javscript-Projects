@@ -1,18 +1,3 @@
-function showAllBombs() {
-    var table = document.querySelector(".GameBoard");
-    var cells = table.querySelectorAll("td");
-
-    cells.forEach((cell, index) => {
-        if (randomCellsIndexes.includes(index)) { // if cell is a bomb
-            var bomb = document.createElement("img");
-            bomb.src = "bombear.png";
-
-            // Substitui o conteúdo da célula pelo elemento de imagem
-            cell.innerHTML = "";
-            cell.appendChild(bomb);
-        }
-    });
-}
 
 function clickNeighbours(cells, index, clickedcells) { // Função ao clicar no 0, ele expandir para os vizinhos
 
@@ -25,13 +10,13 @@ function clickNeighbours(cells, index, clickedcells) { // Função ao clicar no 
             index - 8
         ];
 
-        
 
-        
+
+
         // Clica em cada célula vizinha
         neighbours.forEach(neighbour => {
-            if(!clickedcells.includes(cells[neighbour])){
-            cells[neighbour].click();
+            if (!clickedcells.includes(neighbour)) {
+                cells[neighbour].click();
             }
         });
 
@@ -46,14 +31,14 @@ function clickNeighbours(cells, index, clickedcells) { // Função ao clicar no 
                 index + 7,
                 index + 8
             ];
-            
+
 
 
 
             // Clica em cada célula vizinha
             neighbours.forEach(neighbour => {
-                if(!clickedcells.includes(cells[neighbour])){
-                cells[neighbour].click();
+                if (!clickedcells.includes(neighbour)) {
+                    cells[neighbour].click();
                 }
             });
 
@@ -72,8 +57,8 @@ function clickNeighbours(cells, index, clickedcells) { // Função ao clicar no 
 
             // Clica em cada célula vizinha
             neighbours.forEach(neighbour => {
-                if(!clickedcells.includes(cells[neighbour])){
-                cells[neighbour].click();
+                if (!clickedcells.includes(neighbour)) {
+                    cells[neighbour].click();
                 }
             });
         }
@@ -82,6 +67,7 @@ function clickNeighbours(cells, index, clickedcells) { // Função ao clicar no 
 
 
 }
+
 
 
 function SumBombas(index, randomCellsIndexes) {
@@ -311,5 +297,4 @@ function showGameOver() {
 
 
 ClickCells();
-
 
