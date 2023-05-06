@@ -25,11 +25,9 @@ function clickNeighbours(cells, index, clickedcells) { // Função ao clicar no 
             index - 8
         ];
 
-        // Filtra somente os índices válidos (dentro dos limites da tabela)
-        neighbours = neighbours.filter(neighbour => {
-            return neighbour >= 0 && neighbour < cells.length;
-        });
+        
 
+        
         // Clica em cada célula vizinha
         neighbours.forEach(neighbour => {
             if(!clickedcells.includes(cells[neighbour])){
@@ -48,11 +46,9 @@ function clickNeighbours(cells, index, clickedcells) { // Função ao clicar no 
                 index + 7,
                 index + 8
             ];
+            
 
-            // Filtra somente os índices válidos (dentro dos limites da tabela)
-            neighbours = neighbours.filter(neighbour => {
-                return neighbour >= 0 && neighbour < cells.length;
-            });
+
 
             // Clica em cada célula vizinha
             neighbours.forEach(neighbour => {
@@ -73,11 +69,6 @@ function clickNeighbours(cells, index, clickedcells) { // Função ao clicar no 
                 index + 8,
                 index + 9
             ];
-
-            // Filtra somente os índices válidos (dentro dos limites da tabela)
-            neighbours = neighbours.filter(neighbour => {
-                return neighbour >= 0 && neighbour < cells.length;
-            });
 
             // Clica em cada célula vizinha
             neighbours.forEach(neighbour => {
@@ -237,7 +228,7 @@ function ClickCells() {
                         this.innerHTML = "";
                         this.appendChild(zero);
 
-                        clickNeighbours(cells, index);
+                        clickNeighbours(cells, index, clickedcells);
 
                     }
 
