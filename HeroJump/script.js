@@ -8,7 +8,7 @@ var hero_moving = document.createElement("img");
 hero_moving.src = "mario.gif";
 
 var hero_moving180 = document.createElement("img");
-hero_moving180. src = "mario180.gif";
+hero_moving180.src = "mario180.gif";
 
 var hero_still = document.createElement("img");
 hero_still.src = "marioparado.png";
@@ -20,79 +20,65 @@ personagem.innerHTML = "";
 personagem.appendChild(hero_still); // o personagem vai inicializar parado
 
 const pular = () => {
-    personagem.classList.add('jump');
+  personagem.classList.add('jump');
 
-    setTimeout(() => {
-        personagem.classList.remove('jump');
-    }, 500);
+  setTimeout(() => {
+    personagem.classList.remove('jump');
+  }, 500);
 };
 
-let movimentoParaDireita = null;
+let movimentoParaDireita;
 let movimentoParaEsquerda;
 let emMovimentoDireita = false;
 let emMovimentoEsquerda = false;
 
 
-function moverParaDireita() {
-    if (!emMovimentoDireita) {
-        emMovimentoDireita = true;
-  
-      movimentoParaDireita = setInterval(() => {
-        posicao += velocidade;
-        personagem.style.left = posicao + "px";
-        personagem.innerHTML = "";
-        personagem.appendChild(hero_moving);
-      }, 30);
-    }
-  
-    setTimeout(() => {
-      clearInterval(movimentoParaDireita);
-      emMovimentoDireita = false;
-    }, 3000);
+
+
+
+
+
+function moverParaEsquerda() {
+  if (!emMovimentoEsquerda) {
+    emMovimentoEsquerda = true;
+
+    movimentoParaEsquerda = setInterval(() => {
+      posicao -= velocidade;
+      personagem.style.left = posicao + "px";
+      personagem.innerHTML = "";
+      personagem.appendChild(hero_moving180);
+    }, 30);
   }
 
-
-
-
-  function moverParaEsquerda() {
-    if (!emMovimentoEsquerda) {
-        emMovimentoEsquerda = true;
-  
-      movimentoParaEsquerda = setInterval(() => {
-        posicao -= velocidade;
-        personagem.style.left = posicao + "px";
-        personagem.innerHTML = "";
-        personagem.appendChild(hero_moving180);
-      }, 30);
-    }
-  
-    setTimeout(() => {
-      clearInterval(movimentoParaEsquerda);
-      emMovimentoEsquerda = false;
-    }, 3000);
-  }
+  setTimeout(() => {
+    clearInterval(movimentoParaEsquerda);
+    emMovimentoEsquerda = false;
+  }, 3000);
+}
 
 
 function parar() {
-    clearInterval(movimentoParaDireita);
-    clearInterval(movimentoParaEsquerda);
-    personagem.innerHTML = "";
-    personagem.appendChild(hero_still);
+  clearInterval(movimentoParaDireita);
+  clearInterval(movimentoParaEsquerda);
+  personagem.innerHTML = "";
+  personagem.appendChild(hero_still);
 }
 
 
 document.addEventListener("keydown", function (event) {
-    if (event.code === "ArrowRight") {
-        moverParaDireita();
-    } else if (event.code === "ArrowLeft") {
-        moverParaEsquerda();
-    } else if (event.code === "Space") {
-        pular();
-    }
+  if (event.code === "ArrowRight") {
+
+    
+  } else if (event.code === "ArrowLeft") {
+    moverParaEsquerda();
+  } else if (event.code === "Space") {
+    pular();
+  }
+ 
 });
 
 document.addEventListener("keyup", function (event) {
-    if (event.code === "ArrowRight" || event.code === "ArrowLeft") {
-        parar();
-    }
+  if (event.code === "ArrowRight" || event.code === "ArrowLeft") {
+    parar();
+  }
 });

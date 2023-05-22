@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mario Bros Game</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+
+</head>
+
+<body>
+    <script type="module">
+
+        // import kaboom lib
+        import kaboom from "https://unpkg.com/kaboom/dist/kaboom.mjs";
+
+        kaboom({
+            global: true,
+            fullscreen: true,
+            scale: 2,
+            background: [0, 0, 255,]
+        })
+
+        const speed = 140;
+        let isBig = false;
+
+        map = [
+            '                                                  ',
+            '                                                  ',
+            '                                                  ',
+            '                                                  ',
+            '                                                  ',
+            '                                                  ',
+            '                                                  ',
+            '                                                  ',
+            '                                                  ',
+            '                                                  ',
+            '                                                  ',
+            '                                                  ',
+            '              ?##                                 ',
+            '                                                  ',
+            '                                                  ',
+            '                                                  ',
+            '                  %                               ',
+            '==================================================',
+            
+
+        ]
+
+
+        loadSprite('bloco', 'bloco.png');
+        loadSprite('interrogacao', 'interrogacao.png');
+        loadSprite('interrogacao2', 'interrogacao2.png');
+        loadSprite('tijolinho', 'tijolinho.png');
+        loadSprite('bixo1', 'bixo1.png');
+        loadSprite('bixo2', 'bixo2.png');
+        loadSprite('mario_parado', 'marioparado.png');
+        loadSprite('dinheiro', 'dinheiro.png');
+
+        const gameLevel = addLevel(map, {
+            width: 20,
+            height: 20,
+            "=": () => [
+                sprite("bloco"),
+                area(),
+                solid(),
+            ],
+            "?": () => [
+                sprite("interrogacao"),
+                area(),
+                solid(),
+                'interrogacao'
+            ],
+            "?'": () => [
+                sprite("interrogacao2"),
+                area(),
+                solid(),
+                'interrogacao2'
+            ],
+            "#": () => [
+                sprite("tijolinho"),
+                area(),
+                solid(),
+                'tijolinho'
+            ],
+            "%": () => [
+                sprite("bixo1"),
+                area(),
+                solid(),
+                'dangerous'
+            ],
+            "$": () => [
+                sprite("dinheiro"),
+                'dinheiro'
+            ],
+        })
+
+
+
+        const mario = add([
+            sprite("mario_parado"),
+            pos(80, 300),
+            scale(1.3),
+            area(),
+            solid(),
+            body(),
+        ]);
+
+        keyDown("left", () => {
+            mario.flipX(true);
+            mario.move(-speed, 0);
+        });
+
+        keyDown("right", () => {
+            mario.flipX(false);
+            mario.move(speed, 0);
+        });
+
+        keyPress('space', () => {
+            if (mario.grounded()) {
+                mario.jump(500)
+            }
+        })
+
+        action('dangerous', (obj) =>{
+            obj.move(-20,0)
+        })
+
+        mario.on('headbutt', (obj) => {
+            if(obj.is('tijolinho')){
+                destroy(obj)
+            }
+
+            if(obj.is('interrogacao')){
+                gameLevel.spawn('$', obj.gridPos.sub(0,1))
+                
+            }
+        })
+
+
+
+
+
+
+    </script>
+
+</body>
+
+</html>

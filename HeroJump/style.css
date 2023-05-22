@@ -8,6 +8,7 @@ body {
     width: 150px;
     height: 150px;
     bottom: 0;
+    transition: left 0.3s ease;
 }
 
 .personagem img {
@@ -16,12 +17,27 @@ body {
 }
 
 
+
+
+.animation {
+    animation: moveRight linear forwards;
+}
+
+@keyframes moveRight {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+
+
 .jump {
     position: absolute;
     width: 150px;
     animation: jump 500ms ease-out;
 }
-
 
 @keyframes jump {
     0% {
