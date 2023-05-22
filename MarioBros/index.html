@@ -30,6 +30,7 @@
 
         const speed = 140;
         let isBig = false;
+        let alive = true;
 
         map = [
             '                                                  ',
@@ -44,25 +45,34 @@
             '                                                  ',
             '                                                  ',
             '                                                  ',
-            '              ?##                                 ',
+            '              ?##           @#                    ',
             '                                                  ',
             '                                                  ',
             '                                                  ',
             '                  %                               ',
             '==================================================',
-            
+
 
         ]
 
 
         loadSprite('bloco', 'bloco.png');
         loadSprite('interrogacao', 'interrogacao.png');
+        loadSprite('caixa-cogumelo', 'interrogacao.png');
         loadSprite('interrogacao2', 'interrogacao2.png');
         loadSprite('tijolinho', 'tijolinho.png');
         loadSprite('bixo1', 'bixo1.png');
         loadSprite('bixo2', 'bixo2.png');
         loadSprite('mario_parado', 'marioparado.png');
         loadSprite('dinheiro', 'dinheiro.png');
+        loadSprite('cogumelo', 'cogumelo.png');
+        loadSound("musica", "mariobros.mp3");
+
+
+        if (alive) {
+            const música = play("musica", { loop: true });
+        }
+
 
         const gameLevel = addLevel(map, {
             width: 20,
@@ -78,7 +88,13 @@
                 solid(),
                 'interrogacao'
             ],
-            "?'": () => [
+            "@": () => [
+                sprite("caixa-cogumelo"),
+                area(),
+                solid(),
+                'caixa-cogumelo'
+            ],
+            "?#": () => [
                 sprite("interrogacao2"),
                 area(),
                 solid(),
@@ -100,9 +116,13 @@
                 sprite("dinheiro"),
                 'dinheiro'
             ],
+            "!": () => [
+                sprite("cogumelo"),
+                body(),
+                area(),
+                'cogumelo'
+            ],
         })
-
-
 
         const mario = add([
             sprite("mario_parado"),
@@ -129,18 +149,32 @@
             }
         })
 
-        action('dangerous', (obj) =>{
-            obj.move(-20,0)
+        action('dangerous', (obj) => {
+            obj.move(-20, 0)
+        })
+
+        action('cogumelo', (obj) => {
+            obj.move(20, 0)
         })
 
         mario.on('headbutt', (obj) => {
-            if(obj.is('tijolinho')){
+            if (obj.is('tijolinho')) {
                 destroy(obj)
             }
 
-            if(obj.is('interrogacao')){
-                gameLevel.spawn('$', obj.gridPos.sub(0,1))
+            if (obj.is('caixa-cogumelo')) {
+                gameLevel.spawn('!', obj.gridPos.sub(0, 1))
+                gameLevel.spawn('?#', obj.gridPos.sub(0, 0))
+                destroy(obj)
                 
+            }
+
+            if (obj.is('interrogacao')) {
+                gameLevel.spawn('$', obj.gridPos.sub(0, 1))
+                gameLevel.spawn('?#', obj.gridPos.sub(0, 0))
+                destroy(obj)
+                
+
             }
         })
 
