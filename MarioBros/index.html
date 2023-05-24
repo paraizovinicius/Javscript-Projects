@@ -28,9 +28,49 @@
             background: [0, 0, 255,]
         })
 
+
+
+        const score = add([
+            text("Coins: 0", {
+                size: 10,
+                width: 320,
+                font: "sink"
+            }),
+            pos(24, 24),
+            { value: 0 },
+            fixed()
+        ])
+
         const speed = 140;
         let isBig = false;
-        let alive = true;
+        let isJumping = true;
+        let invincible = false;
+        let x = 256;
+        let bixoIndex = 0;
+
+
+
+        const timer = add([
+            text(`Timer: ${x}`, {
+                size: 10,
+                width: 320,
+                font: "sink"
+            }),
+            pos(104, 24)
+        ])
+
+        function updatetimer() {
+            x -= dt();
+
+            if (x == 0) {
+                go('lose');
+            }
+        }
+
+        onUpdate(() => {
+            updatetimer(); // Chama a função para atualizar o timer a cada quadro
+            timer.text = `Timer: ${Math.ceil(x)}`; // Atualiza o texto do timer exibido
+        });
 
         map = [
             '                                                  ',
@@ -61,17 +101,21 @@
         loadSprite('caixa-cogumelo', 'interrogacao.png');
         loadSprite('interrogacao2', 'interrogacao2.png');
         loadSprite('tijolinho', 'tijolinho.png');
-        loadSprite('bixo1', 'bixo1.png');
-        loadSprite('bixo2', 'bixo2.png');
         loadSprite('mario_parado', 'marioparado.png');
         loadSprite('dinheiro', 'dinheiro.png');
         loadSprite('cogumelo', 'cogumelo.png');
         loadSound("musica", "mariobros.mp3");
+        loadSound("growing", "growing.mp3");
+        loadSound("diesound", "diesound.mp3");
+        loadSound("coinsound", "coinsound.mp3");
+
+        loadSprite('bixo1', 'bixo1.png');
+        loadSprite('bixo2', 'bixo2.png');
 
 
-        if (alive) {
-            const música = play("musica", { loop: true });
-        }
+        const música = play("musica", { loop: true });
+
+
 
 
         const gameLevel = addLevel(map, {
@@ -114,6 +158,8 @@
             ],
             "$": () => [
                 sprite("dinheiro"),
+                body(),
+                area(),
                 'dinheiro'
             ],
             "!": () => [
@@ -124,11 +170,34 @@
             ],
         })
 
+
+
+        function big() {
+            return {
+                isBig() {
+                    return isBig;
+                },
+                biggify() {
+                    this.scale = vec2(1.5);
+                    isBig = true;
+                },
+                smallify() {
+                    this.scale = vec2(1);
+                    isBig = false;
+                    invincible = true;
+                    wait(2, () => {
+                        invincible = false;
+                    });
+                }
+            }
+        }
+
         const mario = add([
             sprite("mario_parado"),
             pos(80, 300),
-            scale(1.3),
+            scale(1),
             area(),
+            big(),
             solid(),
             body(),
         ]);
@@ -145,17 +214,31 @@
 
         keyPress('space', () => {
             if (mario.grounded()) {
-                mario.jump(500)
+                mario.jump(600)
+                isJumping = true
             }
         })
 
-        action('dangerous', (obj) => {
+        let currentSpriteIndex = 0;
+
+        function animateObject(obj) {
+            if (timer >= 1) {
+
+                currentSpriteIndex = (currentSpriteIndex + 1) % ArrayBixo.length;
+
+                obj.use(ArrayBixo[currentSpriteIndex]);
+            }
+        }
+
+        onUpdate('dangerous', (obj) => {
             obj.move(-20, 0)
+            obj.onUpdate(() => animateObject(obj));
         })
 
-        action('cogumelo', (obj) => {
+        onUpdate('cogumelo', (obj) => {
             obj.move(20, 0)
         })
+
 
         mario.on('headbutt', (obj) => {
             if (obj.is('tijolinho')) {
@@ -166,20 +249,62 @@
                 gameLevel.spawn('!', obj.gridPos.sub(0, 1))
                 gameLevel.spawn('?#', obj.gridPos.sub(0, 0))
                 destroy(obj)
-                
+
             }
 
             if (obj.is('interrogacao')) {
                 gameLevel.spawn('$', obj.gridPos.sub(0, 1))
                 gameLevel.spawn('?#', obj.gridPos.sub(0, 0))
                 destroy(obj)
-                
+            }
+        })
 
+        mario.onUpdate(() => {
+            if (mario.grounded()) {
+                isJumping = false;
+            }
+        })
+
+        mario.collides('cogumelo', (obj) => {
+            destroy(obj);
+            mario.biggify();
+            play('growing')
+        })
+
+
+        mario.collides('dinheiro', (obj) => {
+            destroy(obj);
+            play('coinsound')
+            score.value += 1;
+            score.text = "Score: " + score.value;
+        })
+
+        mario.collides('dangerous', (obj) => {
+
+            if (isJumping) {
+                destroy(obj)
+            } else {
+                if (isBig && !invincible) {
+                    mario.smallify()
+                }
+                else if (!isBig && !invincible) {
+                    go("lose")
+                }
             }
         })
 
 
+        scene("lose", (score) => {
+            add([
+                text("Coins: 0", {
+                    size: 40,
+                    width: 320,
+                    font: "sink"
+                }),
 
+                { value: 0 },
+            ])
+        })
 
 
 
