@@ -33,8 +33,7 @@
         const score = add([
             text("Coins: 0", {
                 size: 10,
-                width: 320,
-                font: "sink"
+                width: 320
             }),
             pos(24, 24),
             { value: 0 },
@@ -46,15 +45,13 @@
         let isJumping = true;
         let invincible = false;
         let x = 256;
-        let bixoIndex = 0;
 
 
 
         const timer = add([
             text(`Timer: ${x}`, {
                 size: 10,
-                width: 320,
-                font: "sink"
+                width: 320
             }),
             pos(104, 24)
         ])
@@ -71,29 +68,6 @@
             updatetimer(); // Chama a função para atualizar o timer a cada quadro
             timer.text = `Timer: ${Math.ceil(x)}`; // Atualiza o texto do timer exibido
         });
-
-        map = [
-            '                                                  ',
-            '                                                  ',
-            '                                                  ',
-            '                                                  ',
-            '                                                  ',
-            '                                                  ',
-            '                                                  ',
-            '                                                  ',
-            '                                                  ',
-            '                                                  ',
-            '                                                  ',
-            '                                                  ',
-            '              ?##           @#                    ',
-            '                                                  ',
-            '                                                  ',
-            '                                                  ',
-            '                  %                               ',
-            '==================================================',
-
-
-        ]
 
 
         loadSprite('bloco', 'bloco.png');
@@ -113,63 +87,84 @@
         loadSprite('bixo2', 'bixo2.png');
 
 
-        const música = play("musica", { loop: true });
+        //const música = play("musica", { loop: true });
 
 
 
 
-        const gameLevel = addLevel(map, {
-            width: 20,
-            height: 20,
-            "=": () => [
-                sprite("bloco"),
-                area(),
-                solid(),
-            ],
-            "?": () => [
-                sprite("interrogacao"),
-                area(),
-                solid(),
-                'interrogacao'
-            ],
-            "@": () => [
-                sprite("caixa-cogumelo"),
-                area(),
-                solid(),
-                'caixa-cogumelo'
-            ],
-            "?#": () => [
-                sprite("interrogacao2"),
-                area(),
-                solid(),
-                'interrogacao2'
-            ],
-            "#": () => [
-                sprite("tijolinho"),
-                area(),
-                solid(),
-                'tijolinho'
-            ],
-            "%": () => [
-                sprite("bixo1"),
-                area(),
-                solid(),
-                'dangerous'
-            ],
-            "$": () => [
-                sprite("dinheiro"),
-                body(),
-                area(),
-                'dinheiro'
-            ],
-            "!": () => [
-                sprite("cogumelo"),
-                body(),
-                area(),
-                'cogumelo'
-            ],
+        const gameLevel = addLevel([
+        '                                                  ',
+        '                                                  ',
+        '                                                  ',
+        '                                                  ',
+        '                                                  ',
+        '                                                  ',
+        '                                                  ',
+        '                                                  ',
+        '                                                  ',
+        '                                                  ',
+        '                                                  ',
+        '                                                  ',
+        '              ?##           @#                    ',
+        '                                                  ',
+        '                                                  ',
+        '                                                  ',
+        '                  %                               ',
+        '==================================================',
+    ], {
+            tileWidth: 20,
+            tileHeight: 20,
+            tiles: {
+                "=": () => [
+                    sprite("bloco"),
+                    body(),
+                    area()
+                ],
+                "?": () => [
+                    sprite("interrogacao"),
+                    area(),
+                    body(),
+                    'interrogacao'
+                ],
+                "@": () => [
+                    sprite("caixa-cogumelo"),
+                    area(),
+                    body(),
+                    'caixa-cogumelo'
+                ],
+                "?#": () => [
+                    sprite("interrogacao2"),
+                    area(),
+                    body(),
+                    'interrogacao2'
+                ],
+                "#": () => [
+                    sprite("tijolinho"),
+                    area(),
+                    body(),
+                    'tijolinho'
+                ],
+                "%": () => [
+                    sprite("bixo1"),
+                    area(),
+                    body(),
+                    'dangerous'
+                ],
+                "$": () => [
+                    sprite("dinheiro"),
+                    body(),
+                    area(),
+                    'dinheiro'
+                ],
+                "!": () => [
+                    sprite("cogumelo"),
+                    body(),
+                    area(),
+                    'cogumelo'
+                ],
+            }
+
         })
-
 
 
         function big() {
@@ -198,41 +193,33 @@
             scale(1),
             area(),
             big(),
-            solid(),
             body(),
         ]);
+   
+    
 
-        keyDown("left", () => {
-            mario.flipX(true);
+        onKeyDown("left", () => {
+            mario.scale.x = -1;
             mario.move(-speed, 0);
         });
 
-        keyDown("right", () => {
-            mario.flipX(false);
+
+
+        onKeyDown("right", () => {
+            mario.scale.x = 1;
             mario.move(speed, 0);
         });
 
-        keyPress('space', () => {
-            if (mario.grounded()) {
+        onKeyPress('space', () => {
+            if (mario.isGrounded()) {
                 mario.jump(600)
                 isJumping = true
             }
         })
 
-        let currentSpriteIndex = 0;
-
-        function animateObject(obj) {
-            if (timer >= 1) {
-
-                currentSpriteIndex = (currentSpriteIndex + 1) % ArrayBixo.length;
-
-                obj.use(ArrayBixo[currentSpriteIndex]);
-            }
-        }
 
         onUpdate('dangerous', (obj) => {
-            obj.move(-20, 0)
-            obj.onUpdate(() => animateObject(obj));
+            obj.move(-20, 0);
         })
 
         onUpdate('cogumelo', (obj) => {
@@ -260,26 +247,26 @@
         })
 
         mario.onUpdate(() => {
-            if (mario.grounded()) {
+            if (mario.isGrounded()) {
                 isJumping = false;
             }
         })
 
-        mario.collides('cogumelo', (obj) => {
+        mario.onCollide('cogumelo', (obj) => {
             destroy(obj);
             mario.biggify();
             play('growing')
         })
 
 
-        mario.collides('dinheiro', (obj) => {
+        mario.onCollide('dinheiro', (obj) => {
             destroy(obj);
             play('coinsound')
             score.value += 1;
             score.text = "Score: " + score.value;
         })
 
-        mario.collides('dangerous', (obj) => {
+        mario.onCollide('dangerous', (obj) => {
 
             if (isJumping) {
                 destroy(obj)
@@ -298,8 +285,7 @@
             add([
                 text("Coins: 0", {
                     size: 40,
-                    width: 320,
-                    font: "sink"
+                    width: 320
                 }),
 
                 { value: 0 },
