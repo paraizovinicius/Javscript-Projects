@@ -4,9 +4,6 @@ This is a generic Mario Jump game.
 ## Minefield game
 This is a 8x8 Minefield game.
 
-## Hero Jump
-This is a 2D game, where you can control a 2D character with your rightarrow and leftarrow and jump with spacebar. [Still in progress]
-
 
 ### Installation
 To run the web application locally, you will need to have the following installed on your machine:
